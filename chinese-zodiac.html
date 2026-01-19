@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Takdir Zodiak Cina | Shio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    :root {
+      --blue-dark: #060b1f;
+      --blue-panel: rgba(10, 20, 55, 0.78);
+      --gold: #d4b36a;
+      --border: rgba(200, 210, 255, 0.25);
+      --text: #eef2ff;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: "Georgia", "Times New Roman", serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      background: 
+        linear-gradient(rgba(6,11,31,0.6), rgba(6,11,31,0.6)), /* 半透明叠加，保证文字可读 */
+        url("images/cloud.jpg") no-repeat center center;
+      background-size: cover;  /* 拉伸填充整个页面 */
+      display: flex;
+      justify-content: center;
+      padding: 30px 15px;
+    }
+
+
+    .layout {
+      width: 100%;
+      max-width: 960px;
+      display: flex;
+      gap: 24px;
+    }
+
+    .main {
+      flex: 2;
+    }
+
+    .history {
+      flex: 1;
+      background: var(--blue-panel);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .title {
+      text-align: center;
+      font-size: 28px;
+      letter-spacing: 3px;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+
+    .panel {
+      background: var(--blue-panel);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-size: 14px;
+      color: #cfd6ff;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #020617;
+      color: var(--text);
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 16px;
+      padding: 12px;
+      border-radius: 12px;
+      border: none;
+      background: linear-gradient(135deg, #b4933d, #f1d58a);
+      color: #000;
+      font-size: 16px;
+      letter-spacing: 1px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      filter: brightness(1.1);
+    }
+
+    .card {
+      animation: fadeIn 0.6s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .zodiac-name {
+      text-align: center;
+      font-size: 22px;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+
+    .zodiac-keywords {
+      font-weight: bold;
+      font-size: 16px;
+      margin-bottom: 8px;
+      color: var(--gold);
+      text-align: center;
+    }
+
+    .zodiac-image {
+      width: 100%;         /* 占满卡片宽度 */
+      height: auto;        /* 高度随图片比例自动调整 */
+      overflow: hidden;    /* 防止超出 */
+      position: relative;  /* 保留保存按钮定位 */
+      border-radius: 0;    /* 去掉圆角 */
+      padding: 0;          /* 去掉内边距 */
+      background: none;    /* 去掉背景光晕 */
+      box-shadow: none;    /* 去掉阴影 */
+    }
+
+    .zodiac-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .save-btn {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      background: rgba(212, 179, 106, 0.8); /* 半透明金色 */
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .save-btn:hover {
+      transform: scale(1.15);
+      background: rgba(212, 179, 106, 1);
+    }
+
+
+    .zodiac-desc {
+      font-size: 14px;
+      line-height: 1.8;
+      text-align: justify;
+    }
+
+    .history h3 {
+      margin: 0 0 12px;
+      font-size: 16px;
+      text-align: center;
+      color: var(--gold);
+      letter-spacing: 1px;
+    }
+
+    .history ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .history li {
+      padding: 8px;
+      border-bottom: 1px dashed rgba(255,255,255,0.15);
+      font-size: 14px;
+    }
+    .clear-btn {
+      float: right;
+      font-size: 12px;
+      padding: 2px 6px;
+      border: none;
+      border-radius: 6px;
+      background: #b4933d;
+      color: #000;
+      cursor: pointer;
+      margin-left: 8px;       /* 距离标题稍微远一点 */
+      margin-bottom: 8px;     /* 历史列表和按钮之间留空 */
+    }
+
+    .clear-btn:hover {
+      background: #d4b36a;
+    }
+
+
+    footer {
+      margin-top: 12px;
+      font-size: 12px;
+      text-align: center;
+      color: #aab2ff;
+    }
+
+    @media (max-width: 768px) {
+      .layout {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="layout">
+    <div class="main">
+      <div class="title">Takdir Zodiak Cina | Shio</div>
+
+      <div class="panel">
+        <label>Nama Anda</label>
+        <input type="text" id="userName" placeholder="Masukkan nama Anda" maxlength="20" />
+      
+        <label>Tanggal Lahir & Tahun</label>
+        <input type="text" id="birthDate" placeholder="YYYY/MM/DD" maxlength="8" />
+      
+        <button onclick="calculateZodiac()">Lihat Zodiak Saya</button>
+      </div>
+
+      <div id="result"></div>
+
+      <footer>* Zodiak dihitung berdasarkan tahun lunar Cina</footer>
+    </div>
+
+    <div class="history">
+      <h3>
+        Riwayat Pencarian
+        <button onclick="clearHistory()" class="clear-btn">Clear</button>
+      </h3>
+      <ul id="historyList"></ul>
+    </div>
+  </div>
+
+  <script>
+    function getLunarYear(date) {
+      const year = date.getFullYear();
+      const approxLunarNewYear = new Date(year, 1, 4);
+      return date < approxLunarNewYear ? year - 1 : year;
+    }
+
+    const zodiacs = [
+  {
+    "name": "Tikus",
+    "keywords": "Kecerdasan, Adaptabilitas, Pesona",
+    "desc": "Cerdas dan adaptif, Tikus berkembang di lingkungan yang kompleks dan merebut peluang dengan cepat. Mereka memiliki insting bisnis yang tajam dan sering sukses dalam kewirausahaan atau keuangan. Pesona dan sosiabel, mereka membangun jaringan luas namun dapat bersikap pribadi. Dalam cinta, mereka adalah pasangan yang berdedikasi yang mengekspresikan kasih sayang melalui tindakan penuh perhatian. Sumber daya mereka membantu mereka mengatasi tantangan, meskipun kadang mereka menjadi terlalu hati-hati. Tikus adalah pemikir cepat yang unggul dalam manajemen krisis. Mereka menghargai keamanan keluarga dan sering memberikan dengan murah hati kepada orang-orang terkasih. Meskipun umumnya hemat, mereka menghargai barang-barang berkualitas. Adaptabilitas mereka membuat mereka sukses dalam karir yang melibatkan komunikasi atau inovasi. Kompatibel dengan Naga dan Monyet.",
+    "image": "images/mouse.jpg"
+  },
+  {
+    "name": "Lembu",
+    "keywords": "Ketekunan, Keteguhan, Kekuatan",
+    "desc": "Tekun dan dapat diandalkan, Lembu membangun kesuksesan melalui kesabaran dan ketekunan. Mereka adalah tradisionalis yang menghargai stabilitas dan unggul di lingkungan terstruktur. Dalam hubungan, mereka setia mendalam tetapi mungkin berjuang mengekspresikan emosi secara terbuka. Rasa tanggung jawab kuat mereka membuat mereka pemimpin yang andal dalam pertanian, teknik, atau administrasi. Lembu memiliki kekuatan batin yang luar biasa dan dapat bertahan dari kesulitan yang akan menghancurkan orang lain. Mereka lebih suka solusi praktis daripada ide teoritis dan memiliki keterampilan langsung yang sangat baik. Meskipun lambat marah, temperamen mereka dapat sangat menakutkan ketika akhirnya terpicu. Mereka menemukan kompatibilitas dengan Ular dan Ayam yang menghargai sifat teguh mereka. Dalam cinta, mereka menunjukkan dedikasi melalui tindakan pelindung daripada kata-kata romantis. Warisan mereka dibangun melalui upaya konsisten daripada kemenangan mendadak.",
+    "image": "images/ox.jpg"
+  },
+  {
+    "name": "Harimau",
+    "keywords": "Keberanian, Karisma, Kemandirian",
+    "desc": "Berani dan percaya diri, Harimau adalah pemimpin alami dengan kehadiran kuat. Mereka berkembang di lingkungan kompetitif dan sering unggul dalam peran militer, olahraga, atau eksekutif. Karismatik dan bersemangat, mereka menarik pengagum tetapi menghargai kemandirian dalam hubungan. Harimau murah hati kepada mereka yang mereka lindungi tetapi dapat pemberontak terhadap otoritas. Kehidupan mereka sering mengikuti pola dramatis dengan pencapaian signifikan dan tantangan yang menantang. Mereka adalah pengambil risiko yang mempercayai insting mereka, terkadang mengabaikan detail praktis. Dalam cinta, mereka mencari pasangan yang menghormati kebutuhan mereka akan kebebasan dan petualangan. Harimau paling kompatibel dengan Kuda dan Anjing, sementara bertabrakan dengan Monyet. Mereka memiliki daya tarik alami tetapi mungkin berjuang dengan kesabaran dan kompromi. Keberanian mereka menginspirasi orang lain, meskipun mereka terkadang bertindak sebelum berpikir.",
+    "image": "images/tiger.jpg"
+  },
+  {
+    "name": "Kelinci",
+    "keywords": "Kelembutan, Diplomasi, Kehati-hatian",
+    "desc": "Lembut dan terhalus, Kelinci menghargai harmoni dan unggul dalam diplomasi. Mereka memiliki sensitivitas artistik dan berkembang di bidang kreatif seperti desain, penulisan, atau konseling. Tidak menyukai konflik, mereka sering menengahi perselisihan dengan persuasi yang penuh gaya. Dalam hubungan, mereka mencari keamanan dan koneksi emosional di atas kegembiraan. Kelinci adalah pengambil keputusan yang hati-hati yang lebih suka menghindari risiko yang tidak perlu. Sifat intuitif mereka membantu mereka menavigasi situasi sosial dengan taktik dan kebijaksanaan. Mereka menikmati lingkungan yang nyaman dan memiliki selera estetika yang sangat baik. Kompatibel dengan Kambing dan Babi, mereka mungkin menemukan Anjing terlalu terus terang. Meskipun damai, mereka dapat sangat tangguh ketika melindungi orang tersayang. Hati-hati mereka terkadang menyebabkan peluang yang hilang, tetapi memastikan kemajuan yang stabil.",
+    "image": "images/rabbit.jpg"
+  },
+  {
+    "name": "Naga",
+    "keywords": "Ambisi, Karisma, Inovasi",
+    "desc": "Ambisius dan visioner, Naga melambangkan kekuatan dan takdir yang luar biasa. Inovator alami, mereka unggul dalam peran kepemimpinan, kewirausahaan, atau perintisan artistik. Karismatik dan bersemangat, mereka dengan mudah menarik pasangan tetapi menuntut kekaguman. Naga lahir di bawah tanda paling menguntungkan, dipercaya membawa keberuntungan. Mereka lebih suka proyek-proyek besar daripada tugas-tugas membosankan dan menginspirasi orang lain dengan antusiasme mereka. Dalam cinta, mereka murah hati tetapi mungkin mendominasi hubungan jika tidak berhati-hati. Energi mereka sangat besar tetapi dapat menyebabkan kelelahan tanpa keseimbangan yang tepat. Paling kompatibel dengan Tikus dan Monyet, sementara menantang dengan Anjing. Mereka membenci rutinitas dan terus-menerus mencari tantangan dan petualangan baru. Meskipun kadang-kadang sombong, hati mereka mulia dan niat mereka tulus.",
+    "image": "images/dragon.jpg"
+  },
+  {
+    "name": "Ular",
+    "keywords": "Kebijaksanaan, Intuisi, Misteri",
+    "desc": "Berwawasan dan misterius, Ular memiliki intuisi mendalam dan pemikiran strategis. Mereka unggul dalam penelitian, psikologi, keuangan, atau bidang apa pun yang memerlukan kedalaman analitis. Ular menghargai privasi dan sering menyimpan pikiran sejati mereka dengan hati-hati. Dalam romansa, mereka sangat bersemangat tetapi selektif tentang pasangan. Kebijaksanaan mereka berasal dari pengamatan daripada pengalaman, memberikan perspektif unik mereka. Mereka menghargai keindahan dan kemewahan, sering mengembangkan selera halus. Meskipun terkadang dianggap jauh, mereka membentuk koneksi yang sangat loyal dengan beberapa orang. Kompatibel dengan Lembu dan Ayam yang menghargai pendekatan terukur mereka. Ular merencanakan dengan teliti dan tidak suka terburu-buru atau terkejut. Sifat transformatif mereka memungkinkan mereka untuk menciptakan kembali diri mereka setelah kemunduran.",
+    "image": "images/snake.jpg"
+  },
+  {
+    "name": "Kuda",
+    "keywords": "Kebebasan, Energi, Optimisme",
+    "desc": "Energik dan bebas roh, Kuda berkembang pada gerakan dan kemandirian. Mereka unggul dalam karir yang melibatkan perjalanan, penjualan, hiburan, atau usaha atletik. Ceria dan populer, mereka menikmati lingkaran sosial tetapi menolak pembatasan. Dalam cinta, mereka mencari petualangan dan mungkin berjuang dengan komitmen jangka panjang pada awalnya. Kuda adalah optimis yang menginspirasi orang lain dengan antusiasme dan energi mereka. Sifat impulsif mereka dapat menyebabkan kesuksesan yang cemerlang dan kesalahan yang dapat dihindari. Mereka menghargai kebebasan di atas keamanan dan sering menciptakan gaya hidup yang tidak konvensional. Paling kompatibel dengan Harimau dan Anjing, sementara bertabrakan dengan Tikus. Meskipun kemandirian mereka, mereka sangat murah hati kepada teman sejati. Semangat gelisah mereka membuat mereka tetap muda di hati tetapi terkadang tidak sabar dengan rutinitas.",
+    "image": "images/horse.jpg"
+  },
+  {
+    "name": "Kambing",
+    "keywords": "Kreativitas, Kebaikan, Kepekaan",
+    "desc": "Hati yang baik dan kreatif, Kambing memiliki kedalaman artistik dan emosional yang kuat. Mereka berkembang di bidang kreatif seperti seni, desain, profesi penyembuhan, atau pendidikan. Peka terhadap keindahan, mereka mengelilingi diri mereka dengan lingkungan estetika. Dalam hubungan, mereka mencari harmoni dan mungkin menghindari konfrontasi dengan segala cara. Kambing adalah pendengar yang penuh welas asih yang secara alami menghibur mereka yang dalam kesusahan. Keputusan mereka yang tidak pasti kadang menghambat kemajuan, meskipun kreativitas berkembang dalam ketidakpastian. Mereka lebih suka pekerjaan kolaboratif daripada lingkungan kompetitif. Kompatibel dengan Kelinci dan Babi, mereka mungkin menemukan Lembu terlalu menuntut. Meskipun eksterior yang lembut, mereka memiliki ketahanan yang tenang selama krisis. Ekspresi artistik mereka sering menjadi saluran emosional dan warisan mereka.",
+    "image": "images/goat.jpg"
+  },
+  {
+    "name": "Monyet",
+    "keywords": "Kecerdasan, Keserbagunaan, Rasa Ingin Tahu",
+    "desc": "Cerdas dan serbaguna, Monyet beradaptasi dengan cepat dan menikmati tantangan intelektual. Mereka unggul dalam teknologi, sains, komunikasi, atau bidang apa pun yang memerlukan inovasi. Playful dan menawan, mereka menarik teman dan kekasih dengan humor mereka. Monyet memecahkan masalah secara kreatif tetapi mungkin melewati proses konvensional. Dalam cinta, mereka mencari stimulasi mental dan mungkin bosan dengan yang dapat diprediksi. Rasa ingin tahu mereka mendorong pembelajaran berkelanjutan tetapi dapat menyebarkan fokus mereka. Mereka adalah penghibur alami yang menikmati menjadi pusat perhatian. Paling kompatibel dengan Naga dan Tikus, sementara menantang dengan Harimau. Meskipun reputasi nakal, mereka sangat cerdas dan sumber daya. Kelincahan mereka membantu mereka melarikan diri dari masalah yang akan menjebak orang lain.",
+    "image": "images/monkey.jpg"
+  },
+  {
+    "name": "Ayam",
+    "keywords": "Observasi, Prinsip, Kepercayaan Diri",
+    "desc": "Observan dan prinsipial, Ayam menghargai ketertiban, kejelasan, dan tanggung jawab. Mereka unggul dalam peran organisasi, jurnalisme, hukum, atau profesi yang berorientasi pada detail. Percaya diri dan tegas, mereka sering berfungsi sebagai pembicara kebenaran di komunitas mereka. Dalam hubungan, mereka berdedikasi tetapi mungkin mengkritik pasangan dengan standar tinggi. Ayam adalah perencana yang cermat yang tidak suka kekacauan atau perubahan menit terakhir. Eksterior mereka yang mencolok sering menyembunyikan nilai-nilai tradisional dan etika kerja yang kuat. Mereka paling kompatibel dengan Lembu dan Ular yang menghargai ketekunan mereka. Meskipun kadang-kadang dianggap arogan, niat mereka biasanya protektif. Mereka bangga dengan penampilan dan lingkungan mereka, mempertahankan standar tinggi. Ketepatan waktu dan keandalan mereka membuat mereka sangat berharga dalam situasi krisis.",
+    "image": "images/rooster.jpg"
+  },
+  {
+    "name": "Anjing",
+    "keywords": "Kesetiaan, Kejujuran, Keadilan",
+    "desc": "Setia dan jujur, Anjing menegakkan keadilan dan menghargai kepercayaan di atas segalanya. Mereka unggul dalam profesi layanan, penegakan hukum, konseling, atau pekerjaan advokasi. Hati-hati dalam hubungan, mereka membentuk ikatan yang dalam dan bertahan lama setelah kepercayaan terbentuk. Anjing adalah pelindung alami yang akan membela orang-orang terkasih tanpa ragu. Moral mereka yang kuat kadang membuat mereka menghakimi mereka yang memiliki nilai berbeda. Mereka lebih suka stabilitas daripada petualangan dan membuat karyawan yang andal dan jangka panjang. Dalam cinta, mereka menunjukkan dedikasi melalui tindakan konsisten daripada gestur besar. Paling kompatibel dengan Harimau dan Kuda, sementara menantang dengan Naga. Meskipun kecenderungan cemas, mereka menunjukkan keberanian luar biasa ketika diperlukan. Kesetiaan mereka melampaui orang-orang untuk menyebabkan dan prinsip yang mereka percayai.",
+    "image": "images/dog.jpg"
+  },
+  {
+    "name": "Babi",
+    "keywords": "Kemurahan Hati, Kejujuran, Kelimpahan",
+    "desc": "Hangat dan murah hati, Babi menarik kelimpahan dan menikmati kesenangan hidup. Mereka unggul dalam perhotelan, seni kuliner, filantropi, atau profesi pengasuhan apa pun. Asli dan percaya diri, mereka melihat yang terbaik pada orang lain, kadang untuk kerugian mereka. Dalam hubungan, mereka adalah pasangan yang penuh kasih sayang yang memprioritaskan harmoni keluarga. Babi memiliki insting keuangan yang sangat baik tetapi mungkin memanjakan diri dengan kenyamanan mewah. Cinta mereka akan makanan yang baik dan perusahaan membuat mereka tuan rumah yang luar biasa. Mereka menghindari konflik dan mencari resolusi damai dalam semua situasi. Kompatibel dengan Kelinci dan Kambing, mereka mungkin memerlukan perlindungan dari tanda-tanda yang lebih licik. Meskipun kesederhanaan yang tampak, mereka memiliki kecerdasan emosional yang mendalam. Sifat murah hati mereka sering kembali kepada mereka berlipat ganda melalui persahabatan yang bertahan lama.",
+    "image": "images/pig.jpg"
+  }
+];
+
+    function calculateZodiac() {
+      const name = document.getElementById("userName").value.trim();
+      const input = document.getElementById("birthDate").value.trim();
+
+      if (!name) { alert("Silakan masukkan nama Anda"); return; }
+      if (!/^\d{8}$/.test(input)) { alert("Silakan masukkan tanggal sebagai 8 digit: YYYYMMDD"); return; }
+
+      const year = parseInt(input.slice(0,4),10);
+      const month = parseInt(input.slice(4,6),10) - 1; // JS 月份从0开始
+      const day = parseInt(input.slice(6,8),10);
+
+      const date = new Date(year, month, day);
+      if (isNaN(date)) { alert("Tanggal tidak valid"); return; }
+
+      const lunarYear = getLunarYear(date);
+      const index = (lunarYear - 4) % 12;
+      const zodiac = zodiacs[index];
+
+      document.getElementById("result").innerHTML = `
+        <div class="panel card">
+          <div class="zodiac-name">${name} - ${zodiac.name}</div>
+          <div class="zodiac-image">
+            <img src="${zodiac.image}" alt="${zodiac.name}" />
+            <button class="save-btn" onclick="saveImage('${zodiac.image}', '${name}-${zodiac.name}.jpg')">💾</button>
+          </div>
+          <div class="zodiac-keywords">${zodiac.keywords}</div>
+          <div class="zodiac-desc">${zodiac.desc}</div>
+        </div>
+      `;
+
+      saveHistory(name, zodiac.name);
+    }
+
+    function saveHistory(name, zodiacName) {
+      const history = JSON.parse(localStorage.getItem("zodiacHistory") || "[]");
+      history.unshift({ name, zodiacName });
+      // 保留最新 12 条
+      localStorage.setItem("zodiacHistory", JSON.stringify(history.slice(0, 12)));
+      renderHistory();
+    }
+
+    function renderHistory() {
+          const history = JSON.parse(localStorage.getItem("zodiacHistory") || "[]");
+          document.getElementById("historyList").innerHTML =
+            history.map(h => `<li>${h.name} - ${h.zodiacName}</li>`).join("");
+        }
+        function clearHistory() {
+      if (confirm("Apakah Anda yakin ingin menghapus semua riwayat?")) {
+        localStorage.removeItem("zodiacHistory"); // 清除 localStorage
+        renderHistory(); // 重新渲染空列表
+      }
+    }
+
+    renderHistory();
+  </script>
+</body>
+</html>
