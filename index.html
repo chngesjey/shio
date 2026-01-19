@@ -435,7 +435,6 @@
     function saveHistory(name, zodiacName) {
       const history = JSON.parse(localStorage.getItem("zodiacHistory") || "[]");
       history.unshift({ name, zodiacName });
-      // 保留最新 12 条
       localStorage.setItem("zodiacHistory", JSON.stringify(history.slice(0, 12)));
       renderHistory();
     }
@@ -447,8 +446,8 @@
         }
         function clearHistory() {
       if (confirm("Apakah Anda yakin ingin menghapus semua riwayat?")) {
-        localStorage.removeItem("zodiacHistory"); // 清除 localStorage
-        renderHistory(); // 重新渲染空列表
+        localStorage.removeItem("zodiacHistory");  
+        renderHistory(); 
       }
     }
 

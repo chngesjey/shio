@@ -345,7 +345,7 @@
       if (!/^\d{8}$/.test(input)) { alert("Silakan masukkan tanggal sebagai 8 digit: YYYYMMDD"); return; }
 
       const year = parseInt(input.slice(0,4),10);
-      const month = parseInt(input.slice(4,6),10) - 1; // JS 月份从0开始
+      const month = parseInt(input.slice(4,6),10) - 1; 
       const day = parseInt(input.slice(6,8),10);
 
       const date = new Date(year, month, day);
@@ -373,7 +373,6 @@
     function saveHistory(name, zodiacName) {
       const history = JSON.parse(localStorage.getItem("zodiacHistory") || "[]");
       history.unshift({ name, zodiacName });
-      // 保留最新 12 条
       localStorage.setItem("zodiacHistory", JSON.stringify(history.slice(0, 12)));
       renderHistory();
     }
@@ -385,8 +384,8 @@
         }
         function clearHistory() {
       if (confirm("Apakah Anda yakin ingin menghapus semua riwayat?")) {
-        localStorage.removeItem("zodiacHistory"); // 清除 localStorage
-        renderHistory(); // 重新渲染空列表
+        localStorage.removeItem("zodiacHistory"); 
+        renderHistory(); 
       }
     }
 
