@@ -256,6 +256,12 @@
   </div>
 
   <script>
+    /**
+     * Fungsi untuk mengkonversi tanggal Gregorian ke tahun lunar Cina
+     * Menghitung tahun lunar dengan estimasi Tahun Baru Lunar (~4 Februari)
+     * @param {Date} date - Tanggal yang akan dikonversi
+     * @returns {number} Tahun lunar Cina
+     */
     function getLunarYear(date) {
       const year = date.getFullYear();
       const approxLunarNewYear = new Date(year, 1, 4);
@@ -370,21 +376,41 @@
       saveHistory(name, zodiac.name);
     }
 
+    /**
+     * Fungsi untuk menyimpan hasil pencarian ke localStorage
+     * Menyimpan maksimal 12 record riwayat terbaru
+     * @param {string} name - Nama pengguna
+     * @param {string} zodiacName - Nama zodiak
+     */
     function saveHistory(name, zodiacName) {
       const history = JSON.parse(localStorage.getItem("zodiacHistory") || "[]");
+      // Tambah record baru di awal array
       history.unshift({ name, zodiacName });
+      // Simpan hanya 12 record terakhir
       localStorage.setItem("zodiacHistory", JSON.stringify(history.slice(0, 12)));
+      // Update tampilan riwayat
       renderHistory();
     }
 
+    /**
+     * Fungsi untuk menampilkan daftar riwayat pencarian
+     * Membaca dari localStorage dan render ke halaman
+     */
     function renderHistory() {
           const history = JSON.parse(localStorage.getItem("zodiacHistory") || "[]");
           document.getElementById("historyList").innerHTML =
             history.map(h => `<li>${h.name} - ${h.zodiacName}</li>`).join("");
         }
-        function clearHistory() {
+
+    /**
+     * Fungsi untuk menghapus semua riwayat pencarian
+     * Menampilkan konfirmasi sebelum menghapus
+     */
+    function clearHistory() {
       if (confirm("Apakah Anda yakin ingin menghapus semua riwayat?")) {
+        // Hapus data dari localStorage
         localStorage.removeItem("zodiacHistory"); 
+        // Render ulang riwayat kosong
         renderHistory(); 
       }
     }

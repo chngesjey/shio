@@ -292,6 +292,12 @@
   </div>
 
   <script>
+    /**
+     * Fungsi untuk mengkonversi tanggal Gregorian ke tahun lunar Cina
+     * Menghitung tahun lunar dengan estimasi Tahun Baru Lunar (~4 Februari)
+     * @param {Date} date - Tanggal yang akan dikonversi
+     * @returns {number} Tahun lunar Cina
+     */
     function getLunarYear(date) {
       const year = date.getFullYear();
       const approxLunarNewYear = new Date(year, 1, 4);
@@ -397,21 +403,32 @@
   }
 ];
 
+    /**
+     * Fungsi utama untuk menghitung dan menampilkan zodiak Cina
+     * 1. Validasi input nama dan tanggal
+     * 2. Konversi ke tahun lunar
+     * 3. Tentukan zodiak berdasarkan tahun (12 siklus)
+     * 4. Tampilkan hasil dengan informasi lengkap
+     */
     function calculateZodiac() {
       const name = document.getElementById("userName").value.trim();
       const input = document.getElementById("birthDate").value;
 
+      // Validasi: nama harus diisi
       if (!name) { alert("Silakan masukkan nama Anda"); return; }
+      // Validasi: tanggal harus dipilih
       if (!input) { alert("Silakan pilih tanggal lahir Anda"); return; }
 
-      // input format: YYYY-MM-DD
+      // Konversi string tanggal ke object Date
       const date = new Date(input);
       if (isNaN(date)) { alert("Tanggal tidak valid"); return; }
 
+      // Hitung tahun lunar dan tentukan zodiak
       const lunarYear = getLunarYear(date);
-      const index = (lunarYear - 4) % 12;
+      const index = (lunarYear - 4) % 12; // 12 zodiak dalam siklus lunar
       const zodiac = zodiacs[index];
 
+      // Tampilkan hasil zodiak di halaman
       document.getElementById("result").innerHTML = `
         <div class="panel card">
           <div class="zodiac-name">${name} - ${zodiac.name}</div>
@@ -429,28 +446,55 @@
         </div>
       `;
 
+    // Simpan ke riwayat
       saveHistory(name, zodiac.name);
     }
 
+    /**
+     * Fungsi untuk menyimpan hasil pencarian ke localStorage
+     * Menyimpan maksimal 12 record riwayat terbaru
+     * @param {string} name - Nama pengguna
+     * @param {string} zodiacName - Nama zodiak
+     */
     function saveHistory(name, zodiacName) {
       const history = JSON.parse(localStorage.getItem("zodiacHistory") || "[]");
+      // Tambah record baru di awal array
       history.unshift({ name, zodiacName });
+      // Simpan hanya 12 record terakhir
       localStorage.setItem("zodiacHistory", JSON.stringify(history.slice(0, 12)));
+      // Update tampilan riwayat
       renderHistory();
     }
 
+    /**
+     * Fungsi untuk menampilkan daftar riwayat pencarian
+     * Membaca dari localStorage dan render ke halaman
+     */
     function renderHistory() {
           const history = JSON.parse(localStorage.getItem("zodiacHistory") || "[]");
           document.getElementById("historyList").innerHTML =
             history.map(h => `<li>${h.name} - ${h.zodiacName}</li>`).join("");
         }
-        function clearHistory() {
+
+    /**
+     * Fungsi untuk menghapus semua riwayat pencarian
+     * Menampilkan konfirmasi sebelum menghapus
+     */
+    function clearHistory() {
       if (confirm("Apakah Anda yakin ingin menghapus semua riwayat?")) {
+        // Hapus data dari localStorage
         localStorage.removeItem("zodiacHistory");  
+        // Render ulang riwayat kosong
         renderHistory(); 
       }
     }
 
+    /**
+     * Fungsi untuk mengunduh gambar zodiak
+     * Menggunakan Canvas API untuk convert image ke format yang dapat diunduh
+     * @param {string} imageSrc - Path gambar zodiak
+     * @param {string} fileName - Nama file untuk download
+     */
     function saveImage(imageSrc, fileName) {
       const img = document.getElementById('zodiacImage');
       const canvas = document.createElement('canvas');
