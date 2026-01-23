@@ -24,7 +24,7 @@
       min-height: 100vh;
       color: var(--text);
       background: 
-        linear-gradient(rgba(6,11,31,0.6), rgba(6,11,31,0.6)), /* 半透明叠加，保证文字可读 */
+        linear-gradient(rgba(6,11,31,0.6), rgba(6,11,31,0.6)), 
         url("images/cloud.jpg") no-repeat center center;
       background-size: cover;  
       display: flex;
@@ -435,7 +435,7 @@
     function saveHistory(name, zodiacName) {
       const history = JSON.parse(localStorage.getItem("zodiacHistory") || "[]");
       history.unshift({ name, zodiacName });
-      // 保留最新 12 条
+      
       localStorage.setItem("zodiacHistory", JSON.stringify(history.slice(0, 12)));
       renderHistory();
     }
@@ -448,7 +448,7 @@
         function clearHistory() {
       if (confirm("Apakah Anda yakin ingin menghapus semua riwayat?")) {
         localStorage.removeItem("zodiacHistory"); // 清除 localStorage
-        renderHistory(); // 重新渲染空列表
+        renderHistory();
       }
     }
 
