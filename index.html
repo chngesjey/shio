@@ -447,7 +447,8 @@
         }
         function clearHistory() {
       if (confirm("Apakah Anda yakin ingin menghapus semua riwayat?")) {
-        localStorage.removeItem("zodiacHistory"); // 清除 localStorage
+        localStorage.removeItem("zodiacHistory"); 
+ localStorage
         renderHistory();
       }
     }
