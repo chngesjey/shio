@@ -24,9 +24,9 @@
       min-height: 100vh;
       color: var(--text);
       background: 
-        linear-gradient(rgba(6,11,31,0.6), rgba(6,11,31,0.6)), /* 半透明叠加，保证文字可读 */
+        linear-gradient(rgba(6,11,31,0.6), rgba(6,11,31,0.6)), 
         url("images/cloud.jpg") no-repeat center center;
-      background-size: cover;  /* 拉伸填充整个页面 */
+      background-size: cover;  
       display: flex;
       justify-content: center;
       padding: 30px 15px;
@@ -128,14 +128,14 @@
     }
 
     .zodiac-image {
-      width: 100%;         /* 占满卡片宽度 */
-      height: auto;        /* 高度随图片比例自动调整 */
-      overflow: hidden;    /* 防止超出 */
-      position: relative;  /* 保留保存按钮定位 */
-      border-radius: 0;    /* 去掉圆角 */
-      padding: 0;          /* 去掉内边距 */
-      background: none;    /* 去掉背景光晕 */
-      box-shadow: none;    /* 去掉阴影 */
+      width: 100%;         
+      height: auto;        
+      overflow: hidden;   
+      position: relative; 
+      border-radius: 0;    
+      padding: 0;         
+      background: none;    
+      box-shadow: none;   
     }
 
     .zodiac-image img {
@@ -149,7 +149,7 @@
       position: absolute;
       bottom: 8px;
       right: 8px;
-      background: rgba(212, 179, 106, 0.8); /* 半透明金色 */
+      background: rgba(212, 179, 106, 0.8);
       border: none;
       border-radius: 50%;
       width: 36px;
@@ -202,8 +202,8 @@
       background: #b4933d;
       color: #000;
       cursor: pointer;
-      margin-left: 8px;       /* 距离标题稍微远一点 */
-      margin-bottom: 8px;     /* 历史列表和按钮之间留空 */
+      margin-left: 8px;      
+      margin-bottom: 8px;  
     }
 
     .clear-btn:hover {
@@ -373,7 +373,7 @@
     function saveHistory(name, zodiacName) {
       const history = JSON.parse(localStorage.getItem("zodiacHistory") || "[]");
       history.unshift({ name, zodiacName });
-      // 保留最新 12 条
+      
       localStorage.setItem("zodiacHistory", JSON.stringify(history.slice(0, 12)));
       renderHistory();
     }
@@ -385,8 +385,9 @@
         }
         function clearHistory() {
       if (confirm("Apakah Anda yakin ingin menghapus semua riwayat?")) {
-        localStorage.removeItem("zodiacHistory"); // 清除 localStorage
-        renderHistory(); // 重新渲染空列表
+        localStorage.removeItem("zodiacHistory"); 
+ localStorage
+        renderHistory();
       }
     }
 
